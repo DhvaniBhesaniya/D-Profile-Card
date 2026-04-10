@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Dhvani Bhesaniya – Developer & Designer</title>
+  <meta name="description"
+    content="Personal profile card of Dhvani Bhesaniya – Developer and Designer. Connect via GitHub, Portfolio, LinkedIn, and Medium." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <div class="card" id="profile-card">
+
+    <!-- Cover photo section -->
+    <div class="cover-photo">
+      <img src="images/dhvani.jpeg" alt="Cover photo" class="cover-img" />
+      <span class="badge badge-open">Open to Work</span>
+    </div>
+
+    <!-- Profile image -->
+    <div class="profile-wrapper">
+      <div class="profile-ring">
+        <img src="images/dhvani.jpeg" alt="Dhvani Bhesaniya" class="profile-img" id="profile-avatar" />
+      </div>
+      <div class="status-dot" title="Available"></div>
+    </div>
+
+    <!-- Info section -->
+    <div class="card-body">
+      <h1 class="name">Dhvani Bhesaniya</h1>
+      <p class="role">
+        <span class="role-tag">💻 Software Developer</span>
+        <span class="role-tag">✍️ Technical Writer</span>
+      </p>
+
+      <p class="bio">
+        Rust backend developer who loves crafting fast, reliable systems. Curious AI/ML enthusiast — exploring how
+        machines learn, one model at a time.
+      </p>
+
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num" id="repo-count">–</span>
+          <span class="stat-label">Repos</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Ideas</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">☕</span>
+          <span class="stat-label">Coffee / day</span>
+        </div>
+      </div>
+
+      <!-- Social links -->
+      <div class="social-grid">
+        <a href="https://github.com/DhvaniBhesaniya" target="_blank" rel="noopener" class="social-btn github"
+          id="btn-github" aria-label="GitHub Profile">
+          <i class="fa-brands fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="https://dhvanibhesaniya.github.io/My-Portfolio/" target="_blank" rel="noopener"
+          class="social-btn portfolio" id="btn-portfolio" aria-label="Portfolio Website">
+          <i class="fa-solid fa-globe"></i>
+          <span>Portfolio</span>
+        </a>
+        <a href="https://www.linkedin.com/in/dhvani-bhesaniya" target="_blank" rel="noopener"
+          class="social-btn linkedin" id="btn-linkedin" aria-label="LinkedIn Profile">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://medium.com/@dhvani612" target="_blank" rel="noopener" class="social-btn medium" id="btn-medium"
+          aria-label="Medium Blog">
+          <i class="fa-brands fa-medium"></i>
+          <span>Medium</span>
+        </a>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="action-row">
+        <a href="mailto:dhvani612@gmail.com" class="btn btn-primary" id="btn-email">
+          <i class="fa-solid fa-envelope"></i> Say Hello
+        </a>
+        <button class="btn btn-copy" id="btn-copy" onclick="copyLink()">
+          <i class="fa-solid fa-link"></i> Copy Card Link
+        </button>
+      </div>
+
+      <!-- Copied toast -->
+      <div class="toast" id="copy-toast">🔗 Link copied!</div>
+    </div>
+
+    <!-- Footer -->
+    <!-- <div class="card-footer">
+      <span>Made with <span class="heart">❤️</span> · 2025</span>
+    </div> -->
+  </div>
+
+  <script>
+    // Fetch GitHub public repos count
+    fetch('https://api.github.com/users/DhvaniBhesaniya')
+      .then(r => r.json())
+      .then(data => {
+        if (data.public_repos !== undefined) {
+          document.getElementById('repo-count').textContent = data.public_repos;
+        }
+      })
+      .catch(() => { });
+
+    // Copy card URL to clipboard
+    function copyLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const toast = document.getElementById('copy-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      });
+    }
+
+    // Tilt effect — desktop only (no touch devices)
+    const card = document.getElementById('profile-card');
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (!isTouch) {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const tiltX = (y / rect.height) * 8;
+        const tiltY = -(x / rect.width) * 8;
+        card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    }
+  </script>
+</body>
+
+</html>

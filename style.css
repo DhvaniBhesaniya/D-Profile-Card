@@ -1,0 +1,405 @@
+/* ─── Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── Design Tokens — Light Palette ─── */
+:root {
+  --bg:           #0a0a0a;        /* deep dark — not flat black */
+  --card-bg:      #ffffff;        /* pure white card */
+  --accent:       #2563eb;        /* blue accent */
+  --accent-hover: #1d4ed8;
+  --text-head:    #111827;        /* near-black headings */
+  --text-body:    #374151;        /* dark grey body */
+  --text-muted:   #6b7280;        /* mid grey muted */
+  --border:       #e5e7eb;        /* light border */
+  --tag-bg:       #eff6ff;        /* blue tint tag bg */
+  --tag-color:    #2563eb;
+  --success:      #16a34a;
+  --success-bg:   #f0fdf4;
+  --radius:       18px;
+  --radius-sm:    10px;
+  --shadow:       0 2px 4px rgba(0,0,0,0.5),
+                  0 12px 40px rgba(0,0,0,0.7),
+                  0 32px 80px rgba(0,0,0,0.5);
+  --transition:   0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Body ─── */
+body {
+  min-height: 100vh;
+  /* deep dark bg with subtle centre glow — not flat black */
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 60%, #000000 100%);
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* ─── Card ─── */
+.card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 380px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform var(--transition), box-shadow var(--transition);
+  will-change: transform;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Cover Photo ─── */
+.cover-photo {
+  position: relative;
+  height: 220px;   /* increase for more photo visibility */
+  background: #d1d5db;
+  overflow: hidden;
+}
+
+/* Thin accent top bar */
+.cover-photo::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 3;
+}
+
+/*
+  Cover image — fully visible, no overlay.
+  object-position guide (adjust to any future image):
+    "center top"    → shows top of photo (sky, headshots)
+    "center 40%"    → shows upper-mid (good for most portraits)
+    "center 55%"    → shows mid section (person's face/body)
+    "center bottom" → shows bottom of photo
+*/
+.cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  z-index: 1;
+}
+
+.cover-overlay { display: none; }
+
+/* ─── Badge ─── */
+.badge {
+  position: absolute;
+  z-index: 4;
+  top: 14px; right: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+.badge-open {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--success);
+  border: 1px solid rgba(22,163,74,0.3);
+  backdrop-filter: blur(4px);
+}
+
+/* ─── Avatar ─── */
+.profile-wrapper {
+  position: relative;
+  width: 80px;
+  margin: -40px 0 0 20px;
+  z-index: 10;
+}
+
+/*
+  White ring creates the "cut from cover" illusion —
+  the thick white border matches the card bg so it looks like
+  a circle was punched out of the cover photo.
+*/
+.profile-ring {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  padding: 4px;                          /* ring thickness */
+  background: var(--card-bg);            /* white = matches card → cutout illusion */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+
+.profile-img {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 5%;    /* crop to show face */
+  background: var(--tag-bg);
+  display: block;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 3px; right: 2px;
+  width: 13px; height: 13px;
+  background: var(--success);
+  border-radius: 50%;
+  border: 3px solid var(--card-bg);
+}
+
+/* ─── Card Body ─── */
+.card-body {
+  padding: 12px 22px 20px;
+}
+
+.name {
+  font-size: clamp(19px, 5vw, 22px);
+  font-weight: 700;
+  color: var(--text-head);
+  letter-spacing: -0.4px;
+  margin-bottom: 7px;
+}
+
+.role {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.role-tag {
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  color: var(--tag-color);
+  border: 1px solid rgba(37,99,235,0.18);
+}
+
+.bio {
+  font-size: clamp(12.5px, 3.5vw, 13.5px);
+  color: var(--text-body);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+/* ─── Stats ─── */
+.stats-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 0;
+  margin-bottom: 18px;
+  background: #fafafa;
+}
+
+.stat { flex: 1; text-align: center; }
+
+.stat-num {
+  display: block;
+  font-size: clamp(16px, 4.5vw, 19px);
+  font-weight: 700;
+  color: var(--text-head);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 34px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ─── Social Grid ─── */
+.social-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: clamp(12px, 3.5vw, 13px);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  color: var(--text-body);
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition);
+  white-space: nowrap;
+}
+
+.social-btn i {
+  font-size: 15px;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.social-btn:hover {
+  background: var(--tag-bg);
+  border-color: rgba(37, 99, 235, 0.35);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+.social-btn:hover i { transform: scale(1.15); }
+.social-btn:active  { transform: translateY(0) scale(0.97); }
+
+/* ─── Action Buttons ─── */
+.action-row {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  font-size: clamp(12px, 3.5vw, 13px);
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition:
+    transform var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(37,99,235,0.25);
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 6px 18px rgba(37,99,235,0.35);
+  transform: translateY(-2px);
+}
+
+.btn-copy {
+  background: #fafafa;
+  color: var(--text-body);
+  border: 1px solid var(--border);
+}
+.btn-copy:hover {
+  background: var(--tag-bg);
+  border-color: rgba(37,99,235,0.3);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ─── Toast ─── */
+.toast {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--text-head);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s, transform 0.28s;
+  white-space: nowrap;
+  z-index: 20;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Footer ─── */
+.card-footer {
+  text-align: center;
+  padding: 8px 0 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  border-top: 1px solid var(--border);
+  margin-top: 2px;
+}
+
+/* ─── Blobs hidden (not needed in light mode) ─── */
+.bg-blob { display: none; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 2px; }
+
+/* ─── Responsive ─── */
+
+/* Small phones ≤ 360px */
+@media (max-width: 360px) {
+  body { padding: 12px; }
+  .cover-photo { height: 130px; }
+  .profile-wrapper { width: 60px; margin: -30px 0 0 14px; }
+  .profile-ring    { width: 60px; height: 60px; }
+  .card-body { padding: 10px 14px 16px; }
+  .social-btn { padding: 9px 8px; gap: 5px; }
+  .action-row { flex-direction: column; }
+  .btn { padding: 10px; }
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  body { padding: 30px; }
+  .card { max-width: 400px; }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  body { padding: 40px; }
+}
+
+/* Landscape phone */
+@media (max-height: 600px) and (orientation: landscape) {
+  body { padding: 10px; align-items: flex-start; }
+  .cover-photo { height: 100px; }
+  .stats-row { display: none; }
+}
