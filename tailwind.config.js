@@ -72,6 +72,14 @@ export default {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: "0" },
                 },
+                meteor: {
+                    "0%": { transform: "rotate(315deg) translateX(0)", opacity: "1" },
+                    "70%": { opacity: "1" },
+                    "100%": {
+                        transform: "rotate(315deg) translateX(-2000px)",
+                        opacity: "0",
+                    },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
@@ -79,6 +87,7 @@ export default {
                 "fade-in-up": "fade-in-up 0.6s ease-out both",
                 "avatar-pop": "avatar-pop 0.5s ease-out 0.3s both",
                 "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+                meteor: "meteor 5s linear infinite",
             },
         },
     },
