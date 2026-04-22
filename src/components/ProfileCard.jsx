@@ -95,19 +95,6 @@ const ProfileCard = () => {
         <img src={avatarImg} alt="Cover" className="w-full h-full object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-110" style={{ filter: "brightness(0.7) blur(2px)" }}/>
         <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-70"/>
 
-        {/* Open to Work badge */}
-        <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold tracking-wide" style={{
-            backgroundColor: "hsl(142 76% 46%)",
-            color: "#fff",
-            boxShadow: "0 2px 12px hsl(142 76% 46% / 0.5)",
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateX(0)" : "translateX(30px)",
-            transition: "all 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.4s",
-            animation: loaded ? "pulse-dot 3s ease-in-out infinite" : "none",
-        }}>
-          Open to Work
-        </div>
-
         {/* Back cover image */}
         <div className="absolute inset-0" style={{
             backgroundImage: `url(${backcoverImg})`,
@@ -117,7 +104,7 @@ const ProfileCard = () => {
         }}/>
       </div>
 
-      {/* Avatar */}
+      {/* Avatar & Status */}
       <div className="relative px-6">
         <div className="absolute -top-14 left-6">
           <div className="w-[100px] h-[100px] rounded-full border-4 border-card overflow-hidden shadow-lg transition-all duration-500 hover:shadow-[0_0_25px_hsl(190_100%_50%/0.5)] hover:scale-110 cursor-pointer" style={{
@@ -127,6 +114,23 @@ const ProfileCard = () => {
         }}>
             <img src={avatarImg} alt="Dhvani Bhesaniya" className="w-full h-full object-cover"/>
           </div>
+        </div>
+        
+        {/* Open to opportunities text */}
+        <div className="absolute top-3 right-6 flex items-center gap-2" style={{
+            opacity: avatarLoaded ? 1 : 0,
+            transform: avatarLoaded ? "translateY(0)" : "translateY(-10px)",
+            transition: "all 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s",
+        }}>
+          <div className="w-2 h-2 rounded-full bg-green-500" style={{ 
+            boxShadow: "0 0 8px 2px rgba(34, 197, 94, 0.6)", 
+            animation: avatarLoaded ? "pulse-dot 2s ease-in-out infinite" : "none" 
+          }}></div>
+          <span className="text-[11px] font-bold text-green-400 uppercase tracking-wider" style={{ 
+            textShadow: "0 0 10px rgba(34, 197, 94, 0.5)" 
+          }}>
+            Open to opportunities
+          </span>
         </div>
       </div>
 
@@ -161,7 +165,7 @@ const ProfileCard = () => {
             transform: tagsVisible ? "translateY(0)" : "translateY(10px)",
             transition: "all 0.5s ease 0.2s",
         }}>
-          Rust backend developer who loves crafting fast, reliable systems. Curious AI/ML enthusiast — exploring how
+          Rust backend developer & Open Source Contributor; who loves crafting fast, reliable systems. Curious AI/ML enthusiast — exploring how
           machines learn, one model at a time.
         </p>
       </div>
